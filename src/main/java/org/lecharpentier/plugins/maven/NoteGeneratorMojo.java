@@ -1,5 +1,12 @@
 package org.lecharpentier.plugins.maven;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringReader;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -13,13 +20,6 @@ import org.apache.maven.scm.ScmVersion;
 import org.apache.maven.scm.command.changelog.ChangeLogScmResult;
 import org.apache.maven.scm.manager.ScmManager;
 import org.apache.maven.scm.repository.ScmRepository;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringReader;
 
 /**
  * Generate a release note based on the SCM configuration
@@ -73,7 +73,6 @@ public class NoteGeneratorMojo extends AbstractMojo {
      */
     private ScmManager scmManager;
 
-    @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         File outputFile = new File(outputFilename);
         if (outputFile.exists()) {
@@ -154,7 +153,7 @@ public class NoteGeneratorMojo extends AbstractMojo {
         throw new MojoExecutionException("PreviousVersionType not recognized, only tag, branch and revision");
     }
 
-    private String getCommentSumUp(String comment) {
+    private String getCommentSumUp(String comment) throws IOException {
         StringBuilder sb = new StringBuilder();
         StringReader sr = null;
         try {
@@ -173,7 +172,7 @@ public class NoteGeneratorMojo extends AbstractMojo {
         } finally {
             if (sr != null)
                 sr.close();
-            return sb.toString();
         }
+        return sb.toString();
     }
 }

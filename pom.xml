@@ -18,6 +18,10 @@
             <id>alecharp</id>
             <name>Adrien Lecharpentier</name>
         </developer>
+        <developer>
+            <name>Andrew Heald</name>
+            <organization>Sappho OSS</organization>
+        </developer>
     </developers>
 
     <dependencies>
